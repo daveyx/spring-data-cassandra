@@ -75,45 +75,42 @@ public class BookRepositoryIntegrationTest {
         final Book javaBook = new Book(UUIDs.timeBased(), "Head First Java", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
         bookRepository.save(ImmutableSet.of(javaBook));
         final Iterable<Book> books = bookRepository.findByTitleAndPublisher("Head First Java", "O'Reilly Media");
-        books.forEach(book -> {
-        	System.out.println("book=" + book.getTitle());
-        });
         assertEquals(javaBook.getId(), books.iterator().next().getId());
     }
 
-//    @Test
-//    public void whenUpdatingBooks_thenAvailableOnRetrieval() {
-//        final Book javaBook = new Book(UUIDs.timeBased(), "Head First Java", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
-//        bookRepository.save(ImmutableSet.of(javaBook));
-//        final Iterable<Book> books = bookRepository.findByTitleAndPublisher("Head First Java", "O'Reilly Media");
-//        javaBook.setTitle("Head First Java Second Edition");
-//        bookRepository.save(ImmutableSet.of(javaBook));
-//        final Iterable<Book> updateBooks = bookRepository.findByTitleAndPublisher("Head First Java Second Edition", "O'Reilly Media");
-//        assertEquals(javaBook.getTitle(), updateBooks.iterator().next().getTitle());
-//    }
-//
-//    @Test(expected = java.util.NoSuchElementException.class)
-//    public void whenDeletingExistingBooks_thenNotAvailableOnRetrieval() {
-//        final Book javaBook = new Book(UUIDs.timeBased(), "Head First Java", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
-//        bookRepository.save(ImmutableSet.of(javaBook));
-//        bookRepository.delete(javaBook);
-//        final Iterable<Book> books = bookRepository.findByTitleAndPublisher("Head First Java", "O'Reilly Media");
-//        assertNotEquals(javaBook.getId(), books.iterator().next().getId());
-//    }
-//
-//    @Test
-//    public void whenSavingBooks_thenAllShouldAvailableOnRetrieval() {
-//        final Book javaBook = new Book(UUIDs.timeBased(), "Head First Java", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
-//        final Book dPatternBook = new Book(UUIDs.timeBased(), "Head Design Patterns", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
-//        bookRepository.save(ImmutableSet.of(javaBook));
-//        bookRepository.save(ImmutableSet.of(dPatternBook));
-//        final Iterable<Book> books = bookRepository.findAll();
-//        int bookCount = 0;
-//        for (final Book book : books) {
-//            bookCount++;
-//        }
-//        assertEquals(bookCount, 2);
-//    }
+    @Test
+    public void whenUpdatingBooks_thenAvailableOnRetrieval() {
+        final Book javaBook = new Book(UUIDs.timeBased(), "Head First Java", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
+        bookRepository.save(ImmutableSet.of(javaBook));
+        final Iterable<Book> books = bookRepository.findByTitleAndPublisher("Head First Java", "O'Reilly Media");
+        javaBook.setTitle("Head First Java Second Edition");
+        bookRepository.save(ImmutableSet.of(javaBook));
+        final Iterable<Book> updateBooks = bookRepository.findByTitleAndPublisher("Head First Java Second Edition", "O'Reilly Media");
+        assertEquals(javaBook.getTitle(), updateBooks.iterator().next().getTitle());
+    }
+
+    @Test(expected = java.util.NoSuchElementException.class)
+    public void whenDeletingExistingBooks_thenNotAvailableOnRetrieval() {
+        final Book javaBook = new Book(UUIDs.timeBased(), "Head First Java", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
+        bookRepository.save(ImmutableSet.of(javaBook));
+        bookRepository.delete(javaBook);
+        final Iterable<Book> books = bookRepository.findByTitleAndPublisher("Head First Java", "O'Reilly Media");
+        assertNotEquals(javaBook.getId(), books.iterator().next().getId());
+    }
+
+    @Test
+    public void whenSavingBooks_thenAllShouldAvailableOnRetrieval() {
+        final Book javaBook = new Book(UUIDs.timeBased(), "Head First Java", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
+        final Book dPatternBook = new Book(UUIDs.timeBased(), "Head Design Patterns", "O'Reilly Media", ImmutableSet.of("Computer", "Software"));
+        bookRepository.save(ImmutableSet.of(javaBook));
+        bookRepository.save(ImmutableSet.of(dPatternBook));
+        final Iterable<Book> books = bookRepository.findAll();
+        int bookCount = 0;
+        for (final Book book : books) {
+            bookCount++;
+        }
+        assertEquals(bookCount, 2);
+    }
 
     @After
     public void dropTable() {
