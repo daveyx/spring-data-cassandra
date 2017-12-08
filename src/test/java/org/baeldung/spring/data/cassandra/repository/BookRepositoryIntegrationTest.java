@@ -47,16 +47,13 @@ public class BookRepositoryIntegrationTest {
     @Autowired
     private CassandraAdminOperations adminTemplate;
 
-    //
-
     @BeforeClass
     public static void startCassandraEmbedded() throws InterruptedException, TTransportException, ConfigurationException, IOException {
-//        EmbeddedCassandraServerHelper.startEmbeddedCassandra();
-//        final Cluster cluster = Cluster.builder().addContactPoints("127.0.0.1").withPort(9142).build();
-//        LOGGER.info("Server Started at 127.0.0.1:9142... ");
-        
+        EmbeddedCassandraServerHelper.startEmbeddedCassandra();
+        final Cluster cluster = Cluster.builder().addContactPoints("127.0.0.1").withPort(9142).build();
+        LOGGER.info("Server Started at 127.0.0.1:9142... ");
 
-        final Cluster cluster = Cluster.builder().addContactPoints("127.0.0.1").withPort(9042).build();
+//        final Cluster cluster = Cluster.builder().addContactPoints("127.0.0.1").withPort(9042).build();
         
         final Session session = cluster.connect();
         session.execute(KEYSPACE_CREATION_QUERY);
@@ -119,7 +116,7 @@ public class BookRepositoryIntegrationTest {
 
     @AfterClass
     public static void stopCassandraEmbedded() {
-//        EmbeddedCassandraServerHelper.cleanEmbeddedCassandra();
+        EmbeddedCassandraServerHelper.cleanEmbeddedCassandra();
     }
 
 }
